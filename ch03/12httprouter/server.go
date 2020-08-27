@@ -1,12 +1,12 @@
 // リスト3.12
 
-
 package main
 
 import (
 	"fmt"
-	"github.com/julienschmidt/httprouter" // go get github.com/julienschmidt/httprouter
 	"net/http"
+
+	"github.com/julienschmidt/httprouter" // go get github.com/julienschmidt/httprouter
 )
 
 func hello(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -15,6 +15,9 @@ func hello(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 func main() {
 	mux := httprouter.New()
+
+	// /hello/hoge とすると, 完全一致せずとも /hello にルーティングする
+	// /hoge とすると, 完全一致しないと正しくルーティングされない
 	mux.GET("/hello/:name", hello)
 
 	server := http.Server{
