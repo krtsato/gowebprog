@@ -7,8 +7,9 @@ package main
 
 import (
 	"fmt"
-	"golang.org/x/net/http2"
 	"net/http"
+
+	"golang.org/x/net/http2" // Go v1.6 からはデフォルトになっている
 )
 
 type MyHandler struct{}
