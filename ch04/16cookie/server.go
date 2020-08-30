@@ -32,6 +32,9 @@ Expires フィールドが設定されている場合
 有効期限の指定方法
 ・Expires フィールドを使う : いつ期限切れになるか
 ・MaxAge フィールドを使う : ブラウザ内で生成されてから何秒間有効か
+		・MaxAge=0 means no 'Max-Age' attribute specified.
+		・MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
+		・MaxAge>0 means Max-Age attribute present and given in seconds
 
 Expires と MaxAge が混在している理由
 ・ブラウザ間のクッキー実装の不一致のため
@@ -60,6 +63,8 @@ func setCookie(w http.ResponseWriter, r *http.Request) {
 }
 
 func getCookie(w http.ResponseWriter, r *http.Request) {
+	// 複数のクッキーを取得したい場合 r.Cookies() でスライスを得る
+	// 指定したクッキーが存在しない場合エラー
 	c1, err := r.Cookie("first_cookie")
 	if err != nil {
 		fmt.Fprintln(w, "Cannot get the first cookie")

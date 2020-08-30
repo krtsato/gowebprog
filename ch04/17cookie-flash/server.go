@@ -11,7 +11,9 @@ import (
 func setMessage(w http.ResponseWriter, r *http.Request) {
 	msg := []byte("Hello World!")
 	c := http.Cookie{
-		Name:  "flash",
+		Name: "flash",
+
+		// メッセージは空白を含むため URL エンコードが必要
 		Value: base64.URLEncoding.EncodeToString(msg),
 	}
 	http.SetCookie(w, &c)
@@ -24,10 +26,11 @@ func showMessage(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintln(w, "メッセージがありません。")
 		}
 	} else {
+		// 既存のクッキーを置き換える
 		rc := http.Cookie{
-			Name:    "flash",
-			MaxAge:  -1,
-			Expires: time.Unix(1, 0),
+			Name:    "flash",         // 同名
+			MaxAge:  -1,              // 1 度利用して直ちにクッキーを削除
+			Expires: time.Unix(1, 0), // 過去の Unix 時間 1970-01-01 00:00:01 を指定
 		}
 		http.SetCookie(w, &rc)
 		val, _ := base64.URLEncoding.DecodeString(c.Value)
