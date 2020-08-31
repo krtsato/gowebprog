@@ -8,6 +8,8 @@ import (
 
 func process(w http.ResponseWriter, r *http.Request) {
 	// HTML のテンプレートファイルを解析して構造体を生成
+	// この構造体は新しく生成されたテンプレート
+	// Template 型を返却する
 	t, _ := template.ParseFiles("tmpl.html")
 
 	// ResponseWriter と何らかのデータを引数として解析済みのテンプレートを実行
