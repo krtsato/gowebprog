@@ -11,6 +11,9 @@ import (
 func process(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().Unix())
 	var t *template.Template
+
+	// Layout ファイルで共通部分を描画した上で
+	// 条件分岐するコンポーネントは別のテンプレートとして切り分ける
 	if rand.Intn(10) > 5 {
 		t, _ = template.ParseFiles("layout.html", "red_hello.html")
 	} else {

@@ -8,6 +8,8 @@ import (
 
 func process(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("layout.html")
+
+	// ExecuteTemplate() するときはテンプレート名を引数で明示する
 	t.ExecuteTemplate(w, "layout", "")
 }
 
