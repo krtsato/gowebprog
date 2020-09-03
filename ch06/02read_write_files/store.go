@@ -10,11 +10,12 @@ import (
 func main() {
 	data := []byte("Hello World!\n")
 
-	// ファイルへの書き込みとファイルからの読み込み。WriteFileとReadFileを利用
+	// ファイルへの書き込み
 	err := ioutil.WriteFile("data1", data, 0644)
 	if err != nil {
 		panic(err)
 	}
+	// ファイルからの読み込み
 	read1, _ := ioutil.ReadFile("data1")
 	fmt.Print(string(read1))
 

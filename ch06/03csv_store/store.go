@@ -30,12 +30,15 @@ func main() {
 
 	writer := csv.NewWriter(csvFile)
 	for _, post := range allPosts {
+		// 1 投稿 1 行ずつ
 		line := []string{strconv.Itoa(post.Id), post.Content, post.Author}
 		err := writer.Write(line)
 		if err != nil {
 			panic(err)
 		}
 	}
+
+	// バッファにあったすべてのデータを書き込む
 	writer.Flush()
 
 	// reading a CSV file
@@ -46,6 +49,10 @@ func main() {
 	defer file.Close()
 
 	reader := csv.NewReader(file)
+
+	// FieldsPerRecord > 0: レコード内に想定しているフィールド数
+	// FieldsPerRecord = 0: 最初のレコードの値を FieldsPerRecord とする
+	// FieldsPerRecord < 0: レコード内にすべてのフィールドが揃っていなくても良い
 	reader.FieldsPerRecord = -1
 	record, err := reader.ReadAll()
 	if err != nil {
