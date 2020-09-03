@@ -14,6 +14,7 @@ type Post struct {
 var PostById map[int]*Post
 var PostsByAuthor map[string][]*Post
 
+// DB ではなくメモリ内で保持する
 func store(post Post) {
 	PostById[post.Id] = &post
 	PostsByAuthor[post.Author] = append(PostsByAuthor[post.Author], &post)
