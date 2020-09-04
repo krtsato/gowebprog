@@ -84,6 +84,10 @@ func (post *Post) Create() (err error) {
 
 // Update a post
 func (post *Post) Update() (err error) {
+	// Db.Exec をを使う理由: 高速だから
+	// プリペアドステートメントをを使用せず stmt.QueryRow().Scan() しないから
+	// sql.Result と error を返却する
+	// sql.Result は影響あった行数と, 最後に挿入された行の id を含む
 	_, err = Db.Exec("update posts set content = $2, author = $3 where id = $1", post.Id, post.Content, post.Author)
 	return
 }
