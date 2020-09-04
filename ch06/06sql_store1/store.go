@@ -56,7 +56,13 @@ func Posts(limit int) (posts []Post, err error) {
 
 // Get a single post
 func GetPost(id int) (post Post, err error) {
+	// QueryRow() と Scan() を連ねて使うと
+	// 返された値を空の構造体 Post にコピーできる
 	post = Post{}
+
+	// Warning: この QueryRow は sql.Stmt でなく sql.DB のメソッドである
+	//・sql.Stmt: プリペアドステートメントがあるとき使う
+	//・sql.DB: プリペアドステートメントがないとき使う
 	err = Db.QueryRow("select id, content, author from posts where id = $1", id).Scan(&post.Id, &post.Content, &post.Author)
 	return
 }
