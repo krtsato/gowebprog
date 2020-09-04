@@ -15,6 +15,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+
 	_ "github.com/lib/pq"
 )
 
@@ -62,12 +63,15 @@ func GetPost(id int) (post Post, err error) {
 
 // Create a new post
 func (post *Post) Create() (err error) {
+	// プリペアドステートメント
+	// returning id: クエリ実行後 id 列を返す
 	statement := "insert into posts (content, author) values ($1, $2) returning id"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
+	// QueryRow: クエリを実行後に取得されるレコードの 1 行目のみ返却する
 	err = stmt.QueryRow(post.Content, post.Author).Scan(&post.Id)
 	return
 }
@@ -119,5 +123,5 @@ func main() {
 	fmt.Println(posts) // []
 
 	// Delete all posts
-  // DeleteAll()
+	// DeleteAll()
 }
