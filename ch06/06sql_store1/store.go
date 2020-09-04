@@ -38,6 +38,8 @@ func init() {
 
 // get all posts
 func Posts(limit int) (posts []Post, err error) {
+	// sql.Query はイテレーター Rows を返却する
+	// Rows の Next() で取得結果を順番にスライスへ格納する
 	rows, err := Db.Query("select id, content, author from posts limit $1", limit)
 	if err != nil {
 		return
