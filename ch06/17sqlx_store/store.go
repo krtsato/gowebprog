@@ -7,6 +7,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
@@ -31,6 +32,10 @@ func init() {
 // Get a single post
 func GetPost(id int) (post Post, err error) {
 	post = Post{}
+
+	// QueryRowx() は Rowx を返す
+	// Rowx はメソッド StrucrScan() を持った構造体
+	// テーブルの列を各フィールドに対応付ける
 	err = Db.QueryRowx("select id, content, author from posts where id = $1", id).StructScan(&post)
 	if err != nil {
 		return
